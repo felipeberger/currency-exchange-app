@@ -1,12 +1,14 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import Navbar from './Navbar.js';
-import Footer from './Footer.js';
+import Template from './Template.js';
 
 function App() {
   return (
     <>
+      <Template>
+        <h1>sample text</h1>
+      </Template>
     </>
   );
 }
