@@ -1,0 +1,66 @@
+/* general styling */
+body {
+  background-color: #343a40;
+  margin: 25px;
+  background-image: url('./Big_Painting.jpg');
+}
+
+.container-fluid {
+  max-width: 1000px;
+  background-color: #202124;
+}
+
+i {
+  font-size: 1.25rem;
+}
+
+/* task list styles */
+.task-list hr {
+  border: 1px solid gray;
+}
+
+/* input styles */
+.task-entry hr {
+  border: 1px solid gray;
+}
+
+input {
+  background-color: #202124;
+  font-weight: 400;
+  width: 80%;
+  color: white;
+}
+
+input:focus {
+  outline: none;
+  caret-color: white;
+  color: white;
+}
+
+::placeholder {
+  color: #80868b;
+  opacity: 1;
+}
+
+/* inactive section styles */
+.divider {
+  border: 0.5px dotted #949494;
+}
+
+.inactive,
+h5 {
+  color: #80868b;
+}
+
+.inactive hr {
+  border: 0;
+}
+
+/* media-specific styles */
+@media (max-width: 960px) {
+  body {
+    background-image: none;
+    background-color: #202124;
+    margin-top: 0;
+  }
+}
