@@ -2,6 +2,7 @@ import React from 'react';
 import Flag from './Flag';
 import CurrencySelect from './CurrencySelect';
 import './SingleExchange.css';
+import { json, checkStatus } from './Utils';
 
 class SingleExchange extends React.Component {
   constructor(props) {
@@ -10,13 +11,36 @@ class SingleExchange extends React.Component {
       base: 'USD',
       comparison: 'HKD',
       date: '',
-      rates: {HKD: 1.3},
+      rates: '6y',
       baseAmount: 1,
-      comparisonAmount: 1.3
+      comparisonAmount: '',
+      error: '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.menuSelect = this.menuSelect.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   }
+
+  fetchData = () => {
+
+    let {base, comparison} = this.state;
+
+    fetch(`https://alt-exchange-rate.herokuapp.com/latest?base=${base}&symbols=${comparison}`)
+      .then(checkStatus)
+      .then(json)
+      .then((data) => {
+        console.log(data);
+        console.log(data.rates[comparison]);
+
+        this.setState({rates: data.rates, comparisonAmount: data.rates[comparison].toFixed(2)})
+        console.log(this.state.rates)
+
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
 
   handleChange(event) {
     const {rates, comparison} = this.state;
@@ -37,15 +61,19 @@ class SingleExchange extends React.Component {
   }
 
   menuSelect(event) {
-    console.log(event);
 
     if (event.target.name === "baseMenu") {
       this.setState({base: event.target.value});
     } else {
       this.setState({comparison: event.target.value});
-    }    
+    }
+
+    this.fetchData();
   }
 
+  componentDidMount () {
+    this.fetchData();
+  }
 
   render() {
     const {base, comparison, baseAmount, comparisonAmount} = this.state;
