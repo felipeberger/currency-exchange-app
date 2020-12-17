@@ -1,11 +1,16 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import Navbar from './Navbar.js';
+import Template from './Template.js';
+import SingleExchange from './SingleExchange.js';
 
 function App() {
   return (
-    <Navbar />
+    <>
+      <Template>
+        <SingleExchange />
+      </Template>
+    </>
   );
 }
 
