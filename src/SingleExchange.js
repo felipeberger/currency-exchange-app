@@ -11,8 +11,8 @@ class SingleExchange extends React.Component {
       base: 'USD',
       comparison: 'HKD',
       date: '',
-      rates: '6y',
-      baseAmount: 1,
+      rates: '',
+      baseAmount: '',
       comparisonAmount: '',
       error: '',
     }
@@ -25,15 +25,14 @@ class SingleExchange extends React.Component {
 
     let {base, comparison} = this.state;
 
-    fetch(`https://alt-exchange-rate.herokuapp.com/latest?base=${base}&symbols=${comparison}`)
+    fetch(`https://alt-exchange-rate.herokuapp.com/latest?base=${base}`)
       .then(checkStatus)
       .then(json)
       .then((data) => {
         console.log(data);
-        console.log(data.rates[comparison]);
 
-        this.setState({rates: data.rates, comparisonAmount: data.rates[comparison].toFixed(2)})
-        console.log(this.state.rates)
+        this.setState({rates: data.rates, baseAmount: 1, comparisonAmount: data.rates[comparison].toFixed(2)});
+        console.log(this.state.rates);
 
       })
       .catch((error) => {
@@ -41,34 +40,53 @@ class SingleExchange extends React.Component {
       })
   }
 
-
   handleChange(event) {
-    const {rates, comparison} = this.state;
-    let temp;
 
-    if (event.target.value === '') {
-      this.setState({baseAmount: 1})
-      return;
-    }
+    console.log(this.state.baseAmount, this.state.comparisonAmount);
 
     if (event.target.name === "baseInput") {
-      temp = event.target.value * rates[comparison];
-      this.setState({baseAmount: event.target.value, comparisonAmount: temp.toFixed(2)});
+      this.setState({baseAmount: event.target.value});
+      this.calcComparison(event.target.value);
+
     } else {
-      temp = event.target.value * 1/rates[comparison];
-      this.setState({baseAmount: temp.toFixed(2), comparisonAmount: event.target.value});
+      this.setState({comparisonAmount: event.target.value});
+      this.calcBase(event.target.value);
+
     }
   }
+
+calcComparison = (baseValue) => {
+
+  const {rates, comparison} = this.state;
+  let temp;
+
+  temp = parseFloat(baseValue) * rates[comparison];
+  this.setState({comparisonAmount: temp.toFixed(2)});
+
+}
+
+calcBase = (comparisonValue) => {
+
+  const {rates, comparison} = this.state;
+  let temp;
+
+  temp = parseFloat(comparisonValue) * 1/rates[comparison];
+  console.log(temp);
+  this.setState({baseAmount: temp.toFixed(2)});
+
+}
 
   menuSelect(event) {
 
     if (event.target.name === "baseMenu") {
       this.setState({base: event.target.value});
+      this.fetchData();
+
+
     } else {
       this.setState({comparison: event.target.value});
+      this.fetchData();
     }
-
-    this.fetchData();
   }
 
   componentDidMount () {
@@ -114,6 +132,7 @@ class SingleExchange extends React.Component {
         </div>
       </div>
     );
+
   }
 }
 
