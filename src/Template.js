@@ -9,7 +9,7 @@ const Template = (props) => {
       <Navbar />
       <div className="container-fluid">
         <div className="row">
-          <div className="col 12">
+          <div className="col 12 py-5">
             {props.children}
           </div>
         </div>

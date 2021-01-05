@@ -14,6 +14,7 @@ class SingleExchange extends React.Component {
       rates: '',
       baseAmount: '',
       comparisonAmount: '',
+      comparisonRate: '',
       error: '',
     }
     this.handleChange = this.handleChange.bind(this);
@@ -31,8 +32,7 @@ class SingleExchange extends React.Component {
       .then((data) => {
         console.log(data);
 
-        this.setState({rates: data.rates, baseAmount: 1, comparisonAmount: data.rates[comparison].toFixed(2)});
-        console.log(this.state.rates);
+        this.setState({rates: data.rates, baseAmount: 1, comparisonAmount: data.rates[comparison].toFixed(2), comparisonRate: data.rates[comparison]});
 
       })
       .catch((error) => {
@@ -55,38 +55,47 @@ class SingleExchange extends React.Component {
     }
   }
 
-calcComparison = (baseValue) => {
+  calcComparison = (baseValue) => {
 
-  const {rates, comparison} = this.state;
-  let temp;
+    let {comparisonRate} = this.state;
+    let temp;
 
-  temp = parseFloat(baseValue) * rates[comparison];
-  this.setState({comparisonAmount: temp.toFixed(2)});
+    temp = parseFloat(baseValue) * comparisonRate;
+    this.setState({comparisonAmount: temp.toFixed(2)});
 
-}
+  }
 
-calcBase = (comparisonValue) => {
+  calcBase = (comparisonValue) => {
 
-  const {rates, comparison} = this.state;
-  let temp;
+    const {comparisonRate} = this.state;
+    let temp;
 
-  temp = parseFloat(comparisonValue) * 1/rates[comparison];
-  console.log(temp);
-  this.setState({baseAmount: temp.toFixed(2)});
+    temp = parseFloat(comparisonValue) * 1/comparisonRate;
+    this.setState({baseAmount: temp.toFixed(2)});
 
-}
+  }
 
   menuSelect(event) {
 
+    let {rates, comparison} = this.state;
+    let temp;
+
     if (event.target.name === "baseMenu") {
       this.setState({base: event.target.value});
-      this.fetchData();
-
+      temp = 1/rates[event.target.value] * parseFloat(rates[comparison]);
+      this.setState({baseAmount: 1.00, comparisonAmount: temp.toFixed(2), comparisonRate: temp});
 
     } else {
       this.setState({comparison: event.target.value});
-      this.fetchData();
+      temp = 1/rates[event.target.value];
+      this.setState({baseAmount: temp.toFixed(2), comparisonAmount: 1.00, comparisonRate: temp});
     }
+
+
+
+    // temp = 1/rates[base] * parseFloat(rates[comparison]);
+    //
+    // this.setState({baseAmount: 1, comparisonAmount: temp});
   }
 
   componentDidMount () {
