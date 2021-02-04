@@ -10,7 +10,6 @@ class SingleExchange extends React.Component {
     this.state = {
       base: 'USD',
       comparison: 'HKD',
-      date: '',
       rates: '',
       baseAmount: '',
       comparisonAmount: '',
@@ -20,6 +19,8 @@ class SingleExchange extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.menuSelect = this.menuSelect.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.calcComparison = this.calcComparison.bind(this);
+    this.calcBase = this.calcBase.bind(this);
   }
 
   fetchData = () => {
@@ -41,8 +42,6 @@ class SingleExchange extends React.Component {
   }
 
   handleChange(event) {
-
-    console.log(this.state.baseAmount, this.state.comparisonAmount);
 
     if (event.target.name === "baseInput") {
       this.setState({baseAmount: event.target.value});
@@ -77,25 +76,20 @@ class SingleExchange extends React.Component {
 
   menuSelect(event) {
 
-    let {rates, comparison} = this.state;
+    let {rates, base, comparison} = this.state;
     let temp;
 
     if (event.target.name === "baseMenu") {
       this.setState({base: event.target.value});
-      temp = 1/rates[event.target.value] * parseFloat(rates[comparison]);
+      temp = 1/parseFloat(rates[event.target.value]) * parseFloat(rates[comparison]);
       this.setState({baseAmount: 1.00, comparisonAmount: temp.toFixed(2), comparisonRate: temp});
 
     } else {
       this.setState({comparison: event.target.value});
-      temp = 1/rates[event.target.value];
-      this.setState({baseAmount: temp.toFixed(2), comparisonAmount: 1.00, comparisonRate: temp});
+      temp = 1/parseFloat(rates[base]) * parseFloat(rates[event.target.value]);
+      this.setState({baseAmount: 1.00, comparisonAmount: temp.toFixed(2), comparisonRate: temp});
+      console.log(temp, rates[base], rates[event.target.value]);
     }
-
-
-
-    // temp = 1/rates[base] * parseFloat(rates[comparison]);
-    //
-    // this.setState({baseAmount: 1, comparisonAmount: temp});
   }
 
   componentDidMount () {
@@ -109,7 +103,7 @@ class SingleExchange extends React.Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-5 py-4 text-center">
-            <Flag currency={base} />
+            <Flag currency={base} size={'120px'} />
             <div className="py-2">
             <CurrencySelect name='baseMenu' value={this.state.value} onChange={this.menuSelect} />
             </div>
@@ -126,7 +120,7 @@ class SingleExchange extends React.Component {
           </div>
 
           <div className="col-5 py-4 text-center">
-            <Flag currency={comparison} />
+            <Flag currency={comparison} size={'120px'} />
             <div className="py-2">
             <CurrencySelect name='comparisonMenu' value={this.state.value} onChange={this.menuSelect} />
             </div>
@@ -137,7 +131,6 @@ class SingleExchange extends React.Component {
             onChange={this.handleChange}
             />
           </div>
-
         </div>
       </div>
     );
