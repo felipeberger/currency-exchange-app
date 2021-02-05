@@ -3,7 +3,7 @@ import {getAllCountriesByCurrencyOrSymbol} from 'iso-country-currency';
 
 const Flag = (props) => {
 
-  const {currency} = props;
+  const {currency, size} = props;
   let country_full;
 
   switch (currency) {
@@ -42,7 +42,7 @@ const Flag = (props) => {
   const imageName = require(`./Pictures/${country_full}.png`);
 
   return (
-    <img src={imageName} alt="country icon" width='120px'/>
+    <img src={imageName} alt="country icon" width={size}/>
   )
 }
 
