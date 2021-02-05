@@ -61,7 +61,6 @@ class SingleExchange extends React.Component {
 
     temp = parseFloat(baseValue) * comparisonRate;
     this.setState({comparisonAmount: temp.toFixed(2)});
-
   }
 
   calcBase = (comparisonValue) => {
@@ -71,7 +70,6 @@ class SingleExchange extends React.Component {
 
     temp = parseFloat(comparisonValue) * 1/comparisonRate;
     this.setState({baseAmount: temp.toFixed(2)});
-
   }
 
   menuSelect(event) {
@@ -82,14 +80,14 @@ class SingleExchange extends React.Component {
     if (event.target.name === "baseMenu") {
       this.setState({base: event.target.value});
       temp = 1/parseFloat(rates[event.target.value]) * parseFloat(rates[comparison]);
-      this.setState({baseAmount: 1.00, comparisonAmount: temp.toFixed(2), comparisonRate: temp});
+    }
 
-    } else {
+    else {
       this.setState({comparison: event.target.value});
       temp = 1/parseFloat(rates[base]) * parseFloat(rates[event.target.value]);
-      this.setState({baseAmount: 1.00, comparisonAmount: temp.toFixed(2), comparisonRate: temp});
-      console.log(temp, rates[base], rates[event.target.value]);
     }
+
+    this.setState({baseAmount: 1.00, comparisonAmount: temp.toFixed(2), comparisonRate: temp});
   }
 
   componentDidMount () {
