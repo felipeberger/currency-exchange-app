@@ -11,7 +11,6 @@ class MultiExchange extends React.Component {
       comparisonOne: 'HKD',
       comparisonTwo: 'AUD',
       comparisonThree: 'GBP',
-      comparisonFour: 'CNY',
       rates: '',
       baseAmount: '',
       comparisonAmountOne: '',
@@ -22,14 +21,14 @@ class MultiExchange extends React.Component {
       comparisonRateThree: '',
       error: '',
     }
-    // this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.menuSelect = this.menuSelect.bind(this);
     this.fetchData = this.fetchData.bind(this);
   }
 
   fetchData = () => {
 
-    let {base, comparisonOne, comparisonTwo, comparisonThree, comparisonFour} = this.state;
+    let {base, comparisonOne, comparisonTwo, comparisonThree} = this.state;
 
     fetch(`https://alt-exchange-rate.herokuapp.com/latest?base=${base}`)
       .then(checkStatus)
@@ -37,7 +36,13 @@ class MultiExchange extends React.Component {
       .then((data) => {
         console.log(data);
 
-        this.setState({rates: data.rates, baseAmount: 1, comparisonAmountOne: data.rates[comparisonOne].toFixed(2), comparisonAmountTwo: data.rates[comparisonTwo].toFixed(2), comparisonAmountThree: data.rates[comparisonThree].toFixed(2), comparisonAmountFour: data.rates[comparisonFour].toFixed(2), comparisonRateOne: data.rates[comparisonOne], comparisonRateTwo: data.rates[comparisonTwo], comparisonRateThree: data.rates[comparisonThree], comparisonRateFour: data.rates[comparisonFour]});
+        this.setState({rates: data.rates, baseAmount: 1,
+          comparisonAmountOne: data.rates[comparisonOne].toFixed(2),
+          comparisonAmountTwo: data.rates[comparisonTwo].toFixed(2),
+          comparisonAmountThree: data.rates[comparisonThree].toFixed(2),
+          comparisonRateOne: data.rates[comparisonOne],
+          comparisonRateTwo: data.rates[comparisonTwo],
+          comparisonRateThree: data.rates[comparisonThree]});
 
       })
       .catch((error) => {
@@ -48,22 +53,42 @@ class MultiExchange extends React.Component {
   menuSelect(event) {
 
     let {rates, base, comparisonOne, comparisonTwo, comparisonThree} = this.state;
-    let tempOne, tempTwo, tempThree;
+    let temp, tempOne, tempTwo, tempThree;
 
-    if (event.target.name === "baseMenu") {
-      this.setState({base: event.target.value});
-      tempOne = 1/parseFloat(rates[event.target.value]) * parseFloat(rates[comparisonOne]);
-      tempTwo = 1/parseFloat(rates[event.target.value]) * parseFloat(rates[comparisonTwo]);
-      tempThree = 1/parseFloat(rates[event.target.value]) * parseFloat(rates[comparisonThree]);
-      this.setState({baseAmount: 1.00,
-        comparisonAmountOne: tempOne.toFixed(2), comparisonRateOne: tempOne, comparisonAmountTwo: tempTwo.toFixed(2), comparisonRateTwo: tempTwo, comparisonAmountThree: tempThree.toFixed(2), comparisonRateThree: tempThree});
-      }
+    switch (event.target.name) {
+      case "comparisonOneMenu":
+        this.setState({comparisonOne: event.target.value});
+        temp = 1/parseFloat(rates[base]) * parseFloat(rates[event.target.value]);
+        this.setState({baseAmount: 1.00, comparisonAmountOne: temp.toFixed(2), comparisonRateOne: temp});
+        break;
+      case "comparisonTwoMenu":
+        this.setState({comparisonTwo: event.target.value});
+        temp = 1/parseFloat(rates[base]) * parseFloat(rates[event.target.value]);
+        this.setState({baseAmount: 1.00, comparisonAmountTwo: temp.toFixed(2), comparisonRateTwo: temp});
+        break;
+      case "comparisonThreeMenu":
+        this.setState({comparisonThree: event.target.value});
+        temp = 1/parseFloat(rates[base]) * parseFloat(rates[event.target.value]);
+        this.setState({baseAmount: 1.00, comparisonAmountThree: temp.toFixed(2), comparisonRateThree: temp});
+        break;
+      default:
+        this.setState({base: event.target.value});
+        tempOne = 1/parseFloat(rates[event.target.value]) * parseFloat(rates[comparisonOne]);
+        tempTwo = 1/parseFloat(rates[event.target.value]) * parseFloat(rates[comparisonTwo]);
+        tempThree = 1/parseFloat(rates[event.target.value]) * parseFloat(rates[comparisonThree]);
+        this.setState({baseAmount: 1.00,
+          comparisonAmountOne: tempOne.toFixed(2), comparisonRateOne: tempOne, comparisonAmountTwo: tempTwo.toFixed(2), comparisonRateTwo: tempTwo, comparisonAmountThree: tempThree.toFixed(2), comparisonRateThree: tempThree});;
+    }
+  }
 
-    // else if (event.target.name === "comparisonOneMenu") {
-    //   this.setState({comparisonOne: event.target.value});
-    //   temp = rates[event.target.value];
-    //   this.setState({baseAmount: 1.00, comparisonAmountOne: temp.toFixed(2), comparisonRateOne: temp});
-    // }
+  handleChange(event) {
+    let {comparisonRateOne, comparisonRateTwo, comparisonRateThree} = this.state;
+    let multiplier = event.target.value;
+
+    this.setState({baseAmount: multiplier,
+      comparisonAmountOne: (comparisonRateOne * multiplier).toFixed(2),
+      comparisonAmountTwo: (comparisonRateTwo * multiplier).toFixed(2),
+      comparisonAmountThree: (comparisonRateThree * multiplier).toFixed(2)});
   }
 
   componentDidMount () {
