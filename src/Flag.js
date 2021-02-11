@@ -39,11 +39,10 @@ const Flag = (props) => {
       country_full = country_full.replace(' ', '-');
   }
 
-  const imageName = require(`./Pictures/${country_full}.png`);
+  // const imageName = require(`../public/Pictures/${country_full}.png`);
 
-  return (
-    <img src={imageName} alt="country icon" width={size}/>
-  )
+  return (<img src={`${process.env.PUBLIC_URL}/Pictures/${country_full}.png`} alt="country icon" width={size}/>);
+  
 }
 
 export default Flag;
