@@ -108,6 +108,7 @@ class SingleExchange extends React.Component {
             <input
             type="number"
             name="baseInput"
+            className="form-control"
             value={baseAmount}
             onChange={this.handleChange}
             />
@@ -125,6 +126,7 @@ class SingleExchange extends React.Component {
             <input
             type="number"
             name="comparisonInput"
+            className="form-control"
             value={comparisonAmount}
             onChange={this.handleChange}
             />

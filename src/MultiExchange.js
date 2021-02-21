@@ -112,6 +112,7 @@ class MultiExchange extends React.Component {
               <input
               type="number"
               name="baseInput"
+              className="form-control"
               value={baseAmount}
               onChange={this.handleChange}
               />
