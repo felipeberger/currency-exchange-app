@@ -83,7 +83,7 @@ class Table extends React.Component {
 
         return (
           <>
-            <div className="container-fluid pt-0">
+            <div className="container-fluid sticky-bottom">
               <div className="row">
                 <div className="col-9 mx-auto">
                   <table className="table">
