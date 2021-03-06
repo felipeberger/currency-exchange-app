@@ -108,8 +108,9 @@ class MultiExchange extends React.Component {
         </div>
 
         <div className="row mt-4">
-          <div className="col-3 col-sm-2 text-center">
-            <Flag currency={base} size={'100px'} />
+          <div className="col-3 col-md-2 text-center">
+            <div className="d-none d-sm-block"><Flag currency={base} size={'100px'} /></div>
+            <div className="d-block d-sm-none"><Flag currency={base} size={'85'} /></div>
             <div className="py-2">
               <CurrencySelect name='baseMenu' value={this.state.value} onChange={this.menuSelect} />
             </div>
@@ -124,12 +125,13 @@ class MultiExchange extends React.Component {
             </div>
           </div>
 
-          <div className="d-none d-sm-block col-1" >
+          <div className="d-none d-md-block col-1" >
             <h1 className="align-middle text-center" id="equals"><i className="fas fa-equals"></i></h1>
           </div>
 
           <div className="col-3 text-center">
-            <Flag currency={comparisonOne} size={'100px'} />
+            <div className="d-none d-sm-block"><Flag currency={comparisonOne} size={'100px'} /></div>
+            <div className="d-block d-sm-none"><Flag currency={comparisonOne} size={'85px'} /></div>
             <div className="py-2">
               <CurrencySelect name='comparisonOneMenu' value={this.state.comparisonOne} onChange={this.menuSelect} />
             </div>
@@ -139,7 +141,8 @@ class MultiExchange extends React.Component {
           </div>
 
           <div className="col-3 text-center">
-            <Flag currency={comparisonTwo} size={'100px'} />
+            <div className="d-none d-sm-block"><Flag currency={comparisonTwo} size={'100px'} /></div>
+            <div className="d-block d-sm-none"><Flag currency={comparisonTwo} size={'85px'} /></div>
             <div className="py-2">
               <CurrencySelect name='comparisonTwoMenu' value={this.state.comparisonTwo} onChange={this.menuSelect} />
             </div>
@@ -149,7 +152,8 @@ class MultiExchange extends React.Component {
           </div>
 
           <div className="col-3 text-center">
-            <Flag currency={comparisonThree} size={'100px'} />
+            <div className="d-none d-sm-block"><Flag currency={comparisonThree} size={'100px'} /></div>
+            <div className="d-block d-sm-none"><Flag currency={comparisonThree} size={'85px'} /></div>
             <div className="py-2">
               <CurrencySelect name='comparisonThreeMenu' value={this.state.comparisonThree} onChange={this.menuSelect} />
             </div>
