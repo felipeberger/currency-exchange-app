@@ -103,11 +103,12 @@ class MultiExchange extends React.Component {
       <div className="container-fluid my-5 border rounded">
 
         <div className="py-1 mt-1 text-center">
-          <h2>Compare multiple currencies</h2>
+          <h2 className="d-none d-sm-block">Compare multiple currencies</h2>
+          <h3 className="d-block d-sm-none">Compare multiple currencies</h3>
         </div>
 
         <div className="row mt-4">
-          <div className="col-2 text-center">
+          <div className="col-3 col-sm-2 text-center">
             <Flag currency={base} size={'100px'} />
             <div className="py-2">
               <CurrencySelect name='baseMenu' value={this.state.value} onChange={this.menuSelect} />
@@ -123,7 +124,7 @@ class MultiExchange extends React.Component {
             </div>
           </div>
 
-          <div className="col-1" >
+          <div className="d-none d-sm-block col-1" >
             <h1 className="align-middle text-center" id="equals"><i className="fas fa-equals"></i></h1>
           </div>
 
