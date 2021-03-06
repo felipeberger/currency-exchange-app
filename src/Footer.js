@@ -3,8 +3,8 @@ import React from 'react';
 const Footer = () => {
 
     return (
-      <footer className="bg-dark text-white fixed-bottom">
-        <div className="container-fluid py-2">
+      <footer className="bg-dark text-white position-relative">
+        <div className="container-fluid py-2 mt-1">
           <div className="row justify-content-md-between justify-content-sm-center">
             <div className="col-md-5 align-self-center d-none d-md-block">
               <h4>Created by: <br />Felipe Berger</h4>
@@ -21,7 +21,6 @@ const Footer = () => {
         </div>
       </footer>
     );
-
 }
 
 export default Footer;
