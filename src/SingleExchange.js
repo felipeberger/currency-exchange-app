@@ -27,7 +27,7 @@ class SingleExchange extends React.Component {
 
     let {base, comparison} = this.state;
 
-    fetch(`https://alt-exchange-rate.herokuapp.com/latest?base=${base}`)
+    fetch(`https://api.exchangeratesapi.io/latest?base=${base}`)
       .then(checkStatus)
       .then(json)
       .then((data) => {
