@@ -12,10 +12,13 @@ class Historical extends React.Component {
             comparison: 'HKD',
             startDate: '',
             endDate: '',
-            rates:''
+            rates:'',
+            loaded: false,
         }
 
         this.chartRef = React.createRef();
+        this.menuSelect = this.menuSelect.bind(this);
+
     }
 
     fetchHistoricalRates = () => {
@@ -24,7 +27,6 @@ class Historical extends React.Component {
         const endDate = new Date().toISOString().split('T')[0];
         const startDate = new Date((new Date).getTime() - (30 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
     
-
         fetch(`https://api.exchangeratesapi.io/history?start_at=${startDate}&end_at=${endDate}&base=${base}&symbols=${comparison}`)
           .then(checkStatus)
           .then(json)
@@ -34,13 +36,31 @@ class Historical extends React.Component {
             const chartLabels = Object.keys(data.rates);
             const chartData = Object.values(data.rates).map(rate => rate[comparison]);
             const chartLabel = `${base}/${comparison}`;
-            this.buildChart(chartLabels, chartData, chartLabel);    
+            this.buildChart(chartLabels, chartData, chartLabel);
           })
+
           .catch((error) => {
             console.log(error);
           })
       }
 
+      menuSelect(event) {
+   
+        setTimeout(5000);
+
+        if (event.target.name === "baseMenu") {
+          this.setState({base: event.target.value});
+        }
+    
+        else {
+          this.setState({comparison: event.target.value});
+        }
+        
+        this.setState({ loading: true });
+        this.fetchHistoricalRates();
+        this.setState({loading: false}); 
+        
+      }  
 
     buildChart = (labels, data, label) => {
         const chartRef = this.chartRef.current.getContext("2d");
@@ -76,7 +96,7 @@ class Historical extends React.Component {
 
     render() {
 
-        const {base, comparison} = this.state; 
+        const {base, comparison, loading} = this.state; 
 
         return(
             <div className="container-fluid">

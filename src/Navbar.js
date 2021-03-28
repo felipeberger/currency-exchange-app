@@ -18,6 +18,7 @@ const Navbar = () => {
               <div className="navbar-nav ml-auto">
                 <Link className="nav-item nav-link" to="/comparison">Currency Comparison</Link>
                 <Link className="nav-item nav-link" to="/table">Currency Table</Link>
+                <Link className="nav-item nav-link" to="/historical">Historical Rates</Link>
               
               </div>
             </div>

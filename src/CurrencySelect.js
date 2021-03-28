@@ -3,11 +3,11 @@ import React from 'react';
 
 const CurrencySelect = (props) => {
 
-  const {name, value, onChange} = props;
+  const {name, value, onChange, loading} = props;
 
   return (
     <>
-    <select name={name} value={value} onChange={onChange} defaultValue={name === 'baseMenu'? 'USD' : 'HKD'}>
+    <select name={name} value={value} onChange={onChange} defaultValue={name === 'baseMenu'? 'USD' : 'HKD'} >
       <option value="AUD">AUD</option>
       <option value="BGN">BGN</option>
       <option value="BRL">BRL</option>

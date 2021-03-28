@@ -30,7 +30,7 @@ class Table extends React.Component {
   
       let {base, comparisonOne, comparisonTwo, comparisonThree} = this.state;
   
-      fetch(`https://alt-exchange-rate.herokuapp.com/latest?base=${base}`)
+      fetch(`https://api.exchangeratesapi.io/latest?base=${base}`)
         .then(checkStatus)
         .then(json)
         .then((data) => {

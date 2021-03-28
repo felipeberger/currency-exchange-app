@@ -5,6 +5,7 @@ import SingleExchange from './SingleExchange.js';
 import MultiExchange from './MultiExchange.js';
 import Table from './Table.js';
 import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
+import Historical from './Historical';
 
 
 const NotFound = () => {
@@ -30,6 +31,16 @@ const RatesTable = () => {
   )
 }
 
+const HistoricalRates = () => {
+  return (
+    <>
+      <div className={"content"}>
+      <Historical />
+      </div>
+    </>
+  )
+}
+
 function App() {
   return (
     <>
@@ -38,7 +49,8 @@ function App() {
             <Switch>
               <Route path="/" exact component={withRouter(Comparison)} />
               <Route path="/comparison" component={withRouter(Comparison)} />
-              <Route path="/table" component={withRouter(RatesTable)} />           
+              <Route path="/table" component={withRouter(RatesTable)} />
+              <Route path="/historical" component={withRouter(HistoricalRates)} />
               <Route component={NotFound} />
             </Switch>
           </Template>
