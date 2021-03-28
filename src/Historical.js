@@ -124,8 +124,8 @@ class Historical extends React.Component {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-12 py-4 text-center">
+                <div className="row justify-content-center">
+                    <div className="col-10 py-4 text-center">
                         <canvas ref={this.chartRef} />
                     </div>
 
