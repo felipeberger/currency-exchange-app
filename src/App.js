@@ -5,7 +5,7 @@ import SingleExchange from './SingleExchange.js';
 import MultiExchange from './MultiExchange.js';
 import Table from './Table.js';
 import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
-import Historical from './Historical';
+import Historical from './Historical.js';
 
 
 const NotFound = () => {
