@@ -46,19 +46,17 @@ class Historical extends React.Component {
 
       menuSelect(event) {
    
-        setTimeout(5000);
-
         if (event.target.name === "baseMenu") {
-          this.setState({base: event.target.value});
+          this.setState({base: event.target.value}, () => {
+            this.fetchHistoricalRates();
+          });
         }
     
         else {
-          this.setState({comparison: event.target.value});
+          this.setState({comparison: event.target.value}, () => {
+            this.fetchHistoricalRates();
+          });
         }
-        
-        this.setState({ loading: true });
-        this.fetchHistoricalRates();
-        this.setState({loading: false}); 
         
       }  
 
