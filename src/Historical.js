@@ -82,6 +82,12 @@ class Historical extends React.Component {
             },
             options: {
               responsive: true,
+              title: {
+                  display: true,
+                  text: 'Last 30 days',
+                  position: 'bottom',
+                  fontSize: 16
+              }
             }
           })
         }
@@ -117,23 +123,6 @@ class Historical extends React.Component {
                         </div>
                     </div>
                 </div>
-
-                <div className="row">
-                    <div className="col-12 text-center">
-                        <div className="d-inline px-2">
-                            <button type="button" className="btn btn-outline-dark active" aria-pressed="true" onClick={null}>1 Month</button>
-                        </div>
-                        <div className="d-inline px-2">
-                            <button type="button" className="btn btn-outline-dark" onClick={null}>3 Months</button>
-                        </div>
-                        <div className="d-inline px-2">
-                            <button type="button" className="btn btn-outline-dark" onClick={null}>6 Months</button>
-                        </div>
-                        <div className="d-inline px-2">
-                            <button type="button" className="btn btn-outline-dark" onClick={null}>1 year</button>
-                        </div>
-                    </div>
-                </div>   
 
                 <div className="row">
                     <div className="col-12 py-4 text-center">
