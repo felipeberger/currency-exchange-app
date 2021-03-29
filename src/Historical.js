@@ -26,13 +26,13 @@ class Historical extends React.Component {
         let {base, comparison} = this.state;
         const endDate = new Date().toISOString().split('T')[0];
         const startDate = new Date((new Date).getTime() - (30 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
-    
+
         fetch(`https://api.exchangeratesapi.io/history?start_at=${startDate}&end_at=${endDate}&base=${base}&symbols=${comparison}`)
           .then(checkStatus)
           .then(json)
           .then((data) => {
             console.log(data);
-    
+
             const chartLabels = Object.keys(data.rates);
             const chartData = Object.values(data.rates).map(rate => rate[comparison]);
             const chartLabel = `${base}/${comparison}`;
@@ -45,20 +45,20 @@ class Historical extends React.Component {
       }
 
       menuSelect(event) {
-   
+
         if (event.target.name === "baseMenu") {
           this.setState({base: event.target.value}, () => {
             this.fetchHistoricalRates();
           });
         }
-    
+
         else {
           this.setState({comparison: event.target.value}, () => {
             this.fetchHistoricalRates();
           });
         }
-        
-      }  
+
+      }
 
     buildChart = (labels, data, label) => {
         const chartRef = this.chartRef.current.getContext("2d");
@@ -86,7 +86,7 @@ class Historical extends React.Component {
                   display: true,
                   text: 'Last 30 days',
                   position: 'bottom',
-                  fontSize: 16
+                  fontSize: 14
               }
             }
           })
@@ -100,7 +100,7 @@ class Historical extends React.Component {
 
     render() {
 
-        const {base, comparison, loading} = this.state; 
+        const {base, comparison, loading} = this.state;
 
         return(
             <div className="container-fluid">
@@ -125,7 +125,7 @@ class Historical extends React.Component {
                 </div>
 
                 <div className="row justify-content-center">
-                    <div className="col-10 py-4 text-center">
+                    <div className="col-10 py-3 text-center">
                         <canvas ref={this.chartRef} />
                     </div>
 
@@ -135,7 +135,7 @@ class Historical extends React.Component {
 
 
 
-            
+
         )
     }
 
