@@ -3,7 +3,7 @@ import React from 'react';
 
 const CurrencySelect = (props) => {
 
-  const {name, value, onChange, loading} = props;
+  const {name, value, onChange} = props;
 
   return (
     <>
