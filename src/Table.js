@@ -9,17 +9,8 @@ class Table extends React.Component {
       super(props);
       this.state = {
         base: 'USD',
-        comparisonOne: 'HKD',
-        comparisonTwo: 'AUD',
-        comparisonThree: 'GBP',
-        rates: '',
+        rates: [],
         baseAmount: '',
-        comparisonAmountOne: '',
-        comparisonAmountTwo: '',
-        comparisonAmountThree: '',
-        comparisonRateOne: '',
-        comparisonRateTwo: '',
-        comparisonRateThree: '',
         error: '',
       }
       this.menuSelect = this.menuSelect.bind(this);
@@ -28,21 +19,18 @@ class Table extends React.Component {
   
     fetchData = () => {
   
-      let {base, comparisonOne, comparisonTwo, comparisonThree} = this.state;
+      let {base} = this.state;
   
-      fetch(`https://api.exchangeratesapi.io/latest?base=${base}`)
+      fetch(`https://altexchangerateapi.herokuapp.com/latest?from=${base}`)
         .then(checkStatus)
         .then(json)
         .then((data) => {
-  
-          this.setState({rates: data.rates, baseAmount: 1,
-            comparisonAmountOne: data.rates[comparisonOne].toFixed(2),
-            comparisonAmountTwo: data.rates[comparisonTwo].toFixed(2),
-            comparisonAmountThree: data.rates[comparisonThree].toFixed(2),
-            comparisonRateOne: data.rates[comparisonOne],
-            comparisonRateTwo: data.rates[comparisonTwo],
-            comparisonRateThree: data.rates[comparisonThree]});
-  
+          let temp = data.rates
+          Object.assign(temp, {"USD":1})
+          this.setState({
+            rates: temp,
+            baseAmount: 1,
+          });  
         })
         .catch((error) => {
           console.log(error);
@@ -59,6 +47,7 @@ class Table extends React.Component {
 
           temp = 1/parseFloat(rates[base]) * parseFloat(rates[currency]);
           temp = temp.toFixed(2);
+
           outputArray.push(<><th scope='row'><Flag currency={currency} size={'30px'} />  {currency}</th><td>{temp}</td></>);
         }
 
@@ -73,6 +62,7 @@ class Table extends React.Component {
 
     componentDidMount () {
       this.fetchData();
+      
     }
   
     render() {

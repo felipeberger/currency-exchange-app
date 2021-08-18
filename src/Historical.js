@@ -27,7 +27,7 @@ class Historical extends React.Component {
         const endDate = new Date().toISOString().split('T')[0];
         const startDate = new Date((new Date).getTime() - (30 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
 
-        fetch(`https://api.exchangeratesapi.io/history?start_at=${startDate}&end_at=${endDate}&base=${base}&symbols=${comparison}`)
+        fetch(`https://altexchangerateapi.herokuapp.com/${startDate}..${endDate}?from=${base}&to=${comparison}`)
           .then(checkStatus)
           .then(json)
           .then((data) => {
